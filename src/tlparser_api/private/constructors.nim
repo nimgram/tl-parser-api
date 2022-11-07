@@ -49,7 +49,8 @@ proc parseConstructor*(firstLine: string, file: File): TLApiConstructor =
             result.description.removePrefix("description")
         elif not description.isEmptyOrWhitespace():
             let nameSplit = description.split(" ", 1)
-            typesDescription[nameSplit[0]] = nameSplit[1]
+            if nameSplit.len > 1:
+                typesDescription[nameSplit[0]] = nameSplit[1]
 
     for line in file.lines():
         if line.startsWith("//-"):
@@ -63,7 +64,8 @@ proc parseConstructor*(firstLine: string, file: File): TLApiConstructor =
             for description in descriptions:
                 if not description.isEmptyOrWhitespace():
                     let nameSplit = description.split(" ", 1)
-                    typesDescription[nameSplit[0]] = nameSplit[1]
+                    if nameSplit.len > 1:
+                        typesDescription[nameSplit[0]] = nameSplit[1]
         elif line.startsWith("//"):
             discard
         else:
